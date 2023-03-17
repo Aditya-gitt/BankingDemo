@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { AuthContextProvider } from "./context/AuthAndAccountContext";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BANK_URL, REGISTER_URL, UPLOADDOCS_URL } from "./constants/rout_urls";
+import Bank from "./layout/Bank";
+import Login from "./pages/Login";
+import UploadDocs from "./pages/UploadDocs";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<Login />} />
+            <Route
+              //layout for main bank services
+              path={`${BANK_URL}/*`}
+              element={<Bank />}
+            />
+            <Route path={UPLOADDOCS_URL} element={<UploadDocs />} />
+            <Route path={REGISTER_URL} element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContextProvider>
+    </>
   );
 }
 
